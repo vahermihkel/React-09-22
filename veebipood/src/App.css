@@ -1,0 +1,16 @@
+.pilt {
+  width: 200px;
+}
+
+.pilt:hover {
+  border-radius: 20px;
+}
+
+.nupp {
+  height: 100px;
+  cursor: crosshair;
+}
+
+.nupp:hover {
+  font-weight: bold;
+}
