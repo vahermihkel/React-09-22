@@ -4,8 +4,13 @@ import { useState } from "react";
 function Koduleht() {
   // const ---> constant ehk konstantne väärtus (ei saa pärast initsialiseerimist uuesti väärtust anda)
   // let --> initsialiseerimise järgselt saan ka muuta     locally entire function
+  // const kogusDefaultValue = 5;
   const [kogus, muudaKogus] = useState(5);   // 1. tehakse valmis kogus muutuja
   const [s6num, muudaS6num] = useState("Muuda kogust!"); 
+
+  // const tagasiDefaultValuesse = () => {
+  //   muudaKogus(kogusDefaultValue);
+  // }
 
   // 7. käib onClick ja pannakse käima funktsioon
   const v2henda = () => {    // 2. tehakse valmis funktsioon, aga seda käima ei panda

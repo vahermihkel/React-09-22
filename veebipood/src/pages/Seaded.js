@@ -9,26 +9,31 @@ function Seaded() {
                           // useState("EST");
   const [keel, uuendaKeel] = useState(localStorage.getItem("veebilehe_keel") || "EST"); 
 
-  const muudaKeelEST = () => {
-    uuendaKeel("EST");
-    localStorage.setItem("veebilehe_keel", "EST");
-  }
+  // const muudaKeelEST = () => {
+  //   uuendaKeel("EST");
+  //   localStorage.setItem("veebilehe_keel", "EST");
+  // }
 
-  const muudaKeelENG = () => {
-    uuendaKeel("ENG");
-    localStorage.setItem("veebilehe_keel", "ENG");
-  }
+  // const muudaKeelENG = () => {
+  //   uuendaKeel("ENG");
+  //   localStorage.setItem("veebilehe_keel", "ENG");
+  // }
 
-  const muudaKeelRUS = () => {
-    uuendaKeel("RUS");
-    localStorage.setItem("veebilehe_keel", "RUS");
+  // const muudaKeelRUS = () => {
+  //   uuendaKeel("RUS");
+  //   localStorage.setItem("veebilehe_keel", "RUS");
+  // }
+
+  const muudaKeel = (uusKeel) => {
+    uuendaKeel(uusKeel);
+    localStorage.setItem("veebilehe_keel", uusKeel);
   }
 
   return ( 
     <div>
-      <button onClick={muudaKeelEST}>Muuda eesti keelseks</button>
-      <button onClick={muudaKeelENG}>Muuda inglise keelseks</button>
-      <button onClick={muudaKeelRUS}>Muuda vene keelseks</button>
+      <button onClick={() => muudaKeel("EST")}>Muuda eesti keelseks</button>
+      <button onClick={() => muudaKeel("ENG")}>Muuda inglise keelseks</button>
+      <button onClick={() => muudaKeel("RUS")}>Muuda vene keelseks</button>
 
       {/* <div>Veebilehe keel on: {keel}</div> */}
       { keel === "EST" && <div>Veebilehe keel on: eesti</div>}

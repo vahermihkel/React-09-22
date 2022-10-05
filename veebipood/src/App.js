@@ -5,6 +5,7 @@ import './App.css';
 import Koduleht from './pages/Koduleht';
 import LisaToode from './pages/LisaToode';
 import Ostukorv from './pages/Ostukorv';
+import Poed from './pages/Poed';
 import Seaded from './pages/Seaded';
 
 function App() {
@@ -27,7 +28,9 @@ function App() {
       <Link to="/seaded">
         <button>Seaded</button>
       </Link>
-
+      <Link to="/poed">
+        <button>Poed</button>
+      </Link>
       {/* localhost:3000                "Tere" */}
       {/* localhost:3000/ostukorv     "Ostukorv" */}
       <Routes>
@@ -35,6 +38,7 @@ function App() {
         <Route path="ostukorv" element={ <Ostukorv /> }  />
         <Route path="lisa-toode" element={ <LisaToode /> }  />
         <Route path="seaded" element={ <Seaded /> }  />
+        <Route path="poed" element={ <Poed /> }  />
         <Route path="*" element={ <div>404 Not Found</div> }  />
       </Routes>
 
