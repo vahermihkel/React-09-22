@@ -1,6 +1,11 @@
 import { useState, useRef } from "react"; // <---- HTML (JSX) manipuleerimisega seotud
 //                  from "react-router-dom"    <----- navigeerimisega seotud
 
+// Kõik HOOKid on use eesliidesega, impordime kõik
+// 1. Kutsume funktsioonina välja (sulud lõpus)
+// 2. Nad ei ole kusagil funktsiooni sees
+// 3. Nad ei ole tingimuslikud ehk ma ei tee IF neile
+
 function LisaToode() {
   const [s6num, muudaS6num] = useState(""); // useState muudab HTMLs muutuja väärtust
   const nimiRef = useRef(); //  Line 5:19:  'useRef' is not defined 

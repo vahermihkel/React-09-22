@@ -1,6 +1,41 @@
+import { useState } from "react";
 
 function Ostukorv() {
-  return ( <div>Ostukorv</div> );
+  // const ostukorv = ["Nobe", "Mercedes", "Tesla", "BMW"];
+  const [ostukorv, uuendaOstukorv] = useState(["Nobe", "Mercedes", "Tesla", "BMW"]);
+
+
+  const kustuta = (j2rjekorraNumber) => {
+    ostukorv.splice(j2rjekorraNumber,1); // splice - kustutan
+    console.log(ostukorv);
+    uuendaOstukorv(ostukorv.slice()); // slice - teen koopia
+  }
+
+  const lisa = (klikitudToode) => {
+    ostukorv.push(klikitudToode); // push - lisa 1 lõppu juurde
+    uuendaOstukorv(ostukorv.slice());
+  }
+
+  const tyhjenda = () => {
+    uuendaOstukorv([]);
+  }
+
+  function tyhjenda() {
+
+  }
+
+  return ( 
+    <div>
+      { ostukorv.length === 0 && <div>Ostukorv on tühi!</div> }
+      { ostukorv.length > 0 && <div>Ostukorvis on {ostukorv.length} toodet</div> }
+      { ostukorv.length > 0 && <button onClick={tyhjenda}>Tühjenda</button> }
+      {ostukorv.map((element, j2rjekorraNumber) => 
+        <div key={j2rjekorraNumber}>
+          {element}
+          <button onClick={() => kustuta(j2rjekorraNumber)}>x</button>
+          <button onClick={() => lisa(element)}>Lisa</button>
+        </div>)}
+    </div> );
 }
 
 export default Ostukorv;
