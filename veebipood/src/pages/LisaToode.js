@@ -1,36 +1,27 @@
-import { useState, useRef } from "react"; // <---- HTML (JSX) manipuleerimisega seotud
-//                  from "react-router-dom"    <----- navigeerimisega seotud
-
-// Kõik HOOKid on use eesliidesega, impordime kõik
-// 1. Kutsume funktsioonina välja (sulud lõpus)
-// 2. Nad ei ole kusagil funktsiooni sees
-// 3. Nad ei ole tingimuslikud ehk ma ei tee IF neile
+import { useState, useRef } from "react";
 
 function LisaToode() {
-  const [s6num, muudaS6num] = useState(""); // useState muudab HTMLs muutuja väärtust
-  const nimiRef = useRef(); //  Line 5:19:  'useRef' is not defined 
-                      // kuulab reaalajas inputi sisse sisestatud väärtust
+  const [s6num, muudaS6num] = useState("");
+  const nimiRef = useRef(); 
 
   const lisa = () => {
-    // if (nimiRef.current !== undefined)    
-    //undefined --- ta ei tea ka tüüpi ja on tühjus    
-    //null -- teab tüüpi, aga on tühjus
     if (nimiRef.current.value === "") {
       muudaS6num("Ei saa lisada ilma nimeta!");
     } else {
       muudaS6num("Lisatud: " + nimiRef.current.value);
-    }      // mine loogeliste sulgude blokki nr 1 kui sulgude sees on tõsi
-                          // kui ei ole tõsi, mine blokki nr 2
-
-    // console.log(document.getElementById("nimi").value)
-    //  <input id="nimi" type="text" /> <br />
-    // 1. JavaScript käib document.getElementById abil läbi KÕIK HTMLi mis on nähtav:
-    //     (anomaalia - kuskil teises kogemata lisasime sama ID)
-    //  Kui on nähtav: Ostukorv.js <-- siinse HTMLi,   Koduleht.js <-- siinse HTMLi  --> App.js <-- siinse HTMLi
-    // 2. Efektiivsus (liiga palju tööd ei tee)
+      let tootedLS = localStorage.getItem("tooted");
+      tootedLS = JSON.parse(tootedLS) || [];
+      tootedLS.push(nimiRef.current.value);
+      tootedLS = JSON.stringify(tootedLS);
+      localStorage.setItem("tooted", tootedLS);
+    } 
   }
 
-  // loogeline sulg kaob ära: Line 31:  Parsing error: 'import' and 'export' may only appear at the top level.
+  // 1. võta kõik tooted localStoragest        localStorage.getItem("VõTI");
+  // 2. võta talt jutumärgid maha              JSON.parse()
+  // 3. lisa talle üks juurde                  .push()
+  // 4. pane talle jutumärgid tagasi           JSON.stringify()
+  // 5. pane localStoragesse väärtused tagasi  localStorage.setItem("VÕTI", väärtused)
 
   return ( 
     <div>
@@ -42,6 +33,3 @@ function LisaToode() {
 }
 
 export default LisaToode;
-
-// tab <-/-> nupp nihutab paremale
-// shift + tab nihutab vasakule

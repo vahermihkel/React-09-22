@@ -1,4 +1,4 @@
-import { useState } from "react"; // <- kui on puudu: Line 5:30:  'useState' is not defined  no-undef
+import { useRef, useState } from "react"; // <- kui on puudu: Line 5:30:  'useState' is not defined  no-undef
 
 // ffc
 function Seaded() {
@@ -8,6 +8,8 @@ function Seaded() {
   //      useState sulgude sees on lehele tulemise ajal kehtiv väärtus
                           // useState("EST");
   const [keel, uuendaKeel] = useState(localStorage.getItem("veebilehe_keel") || "EST"); 
+  const telRef = useRef(); // inputi seest väärtuse kättesaamiseks
+  const emailRef = useRef();
 
   // const muudaKeelEST = () => {
   //   uuendaKeel("EST");
@@ -29,8 +31,30 @@ function Seaded() {
     localStorage.setItem("veebilehe_keel", uusKeel);
   }
 
+  const salvestaTel = () => {
+    // localStorage-s salvestame setItem abil, andes kaasa võtme ja väärtuse mille salvestan
+    // salvestame, et kuskil mujal teha getItem, andes kaasa ainult võtme ja see getItem koht saab omakorda
+    //     viimati sisestatud setItem-i väärtuse
+    localStorage.setItem("telefon", telRef.current.value);
+  }
+
+  const salvestaEmail = () => {
+    // parem klõps -> inpsect -> application -> Local Storage
+    localStorage.setItem("email", emailRef.current.value);
+  }
+
   return ( 
     <div>
+      <label>Meie telefoninumber</label>
+      <input ref={telRef} type="text" />
+      <button onClick={salvestaTel}>Sisesta</button>
+      <br />
+      <label>Meie email</label>
+      <input ref={emailRef} type="text" />
+      <button onClick={salvestaEmail}>Sisesta</button>
+      <br />
+
+
       <button onClick={() => muudaKeel("EST")}>Muuda eesti keelseks</button>
       <button onClick={() => muudaKeel("ENG")}>Muuda inglise keelseks</button>
       <button onClick={() => muudaKeel("RUS")}>Muuda vene keelseks</button>
