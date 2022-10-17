@@ -46,11 +46,11 @@ function Seaded() {
   return ( 
     <div>
       <label>Meie telefoninumber</label>
-      <input ref={telRef} type="text" />
+      <input ref={telRef} defaultValue={localStorage.getItem("telefon")} type="text" />
       <button onClick={salvestaTel}>Sisesta</button>
       <br />
       <label>Meie email</label>
-      <input ref={emailRef} type="text" />
+      <input ref={emailRef} defaultValue={localStorage.getItem("email")} type="text" />
       <button onClick={salvestaEmail}>Sisesta</button>
       <br />
 
@@ -88,6 +88,7 @@ export default Seaded;
 // !== - kui vasak pool ja parem pool ei ole võrdsed, on tõde
 // () - defineerivad funktsiooni
 // () => {} funktsiooni tähistus
+// [] - array / massiiv / list    [1231, "pig", "cats", "dogs", 31231]
 
 // <button onClick={() => uuendaKeel("EST")}>Muuda eesti keelseks</button>
 // <button onClick={uuendaKeel("EST")}>Muuda eesti keelseks</button> --->

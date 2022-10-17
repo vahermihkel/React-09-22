@@ -10,6 +10,12 @@ function Ostukorv() {
     console.log(ostukorv);
     uuendaOstukorv(ostukorv.slice()); // slice - teen koopia
     localStorage.setItem("ostukorv", JSON.stringify(ostukorv));
+    // console.log(localStorage.length);
+    // localStorage.getItem("ostukorv");
+    // localStorage.key(3);
+    // localStorage.removeItem("ostukorv");
+    // localStorage.clear();
+    // localStorage.setItem("1", "2");
   }
 
   const lisa = (klikitudToode) => {
