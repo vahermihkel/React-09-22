@@ -14,3 +14,7 @@
 .nupp:hover {
   font-weight: bold;
 }
+
+img {
+  height: 100px;
+}

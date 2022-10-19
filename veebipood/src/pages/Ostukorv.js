@@ -33,6 +33,17 @@ function Ostukorv() {
     // uuendaOstukorv([]);
   // }
 
+  const arvutaKogusumma = () => {
+    let kogusumma = 0;
+    // [{n:"C", hind: 12}, {n:"S", hind: 11}, {n:"F", hind: 2}]
+    //       {n:"C", hind: 12}=>   12    =  0  +  12
+    //       {n:"S", hind: 11}=>   23    =  12 + 11
+    //       {n:"F", hind: 2}=>    25    =  23 + 2
+    // ostukorv.forEach(element => kogusumma += element.hind );
+    ostukorv.forEach(element => kogusumma = kogusumma + element.hind );
+    return kogusumma;
+  }
+
   return ( 
     <div>
       { ostukorv.length === 0 && <div>Ostukorv on tühi!</div> }
@@ -40,10 +51,14 @@ function Ostukorv() {
       { ostukorv.length > 0 && <button onClick={tyhjenda}>Tühjenda</button> }
       {ostukorv.map((element, j2rjekorraNumber) => 
         <div key={j2rjekorraNumber}>
-          {element}
+{/* Objects are not valid as a React child (found: object with keys {nimi, hind, pilt, aktiivne}). If you meant to render a collection of children, use an array instead. */}
+          <div>{element.nimi}</div>
+          <div>{element.hind} €</div>
+          <img src={element.pilt} alt="" />
           <button onClick={() => kustuta(j2rjekorraNumber)}>x</button>
           <button onClick={() => lisa(element)}>Lisa</button>
         </div>)}
+      <div>Kokku: {arvutaKogusumma()} €</div>
     </div> );
 }
 

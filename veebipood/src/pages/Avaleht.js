@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 function Avaleht() {
   const tooted = JSON.parse(localStorage.getItem("tooted")) || [];
-
                         // "BMW"
   const lisaOstukorvi = (klikitudToode) => {
     //           1. "["Nobe", "Nobe", "Tesla"]"    2. null
@@ -30,7 +29,11 @@ function Avaleht() {
       {tooted.map((element, index) => 
         <div key={index}>
           <Link to={"/toode/" + index}>
-            {element}
+{/* Objects are not valid as a React child (found: object with keys {nimi, hind, pilt, aktiivne}) */}
+            <div>{element.nimi}</div>
+            <div>{element.hind}</div>
+            <img src={element.pilt} alt="" />
+            <div>{element.aktiivne + 0}</div>
           </Link>
           <button onClick={() => lisaOstukorvi(element)}>Lisa ostukorvi</button>
         </div>)}
