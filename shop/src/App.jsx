@@ -11,10 +11,12 @@ import EditProduct from './pages/admin/EditProduct.jsx';
 import MaintainCategories from './pages/admin/MaintainCategories.jsx';
 import MaintainProducts from './pages/admin/MaintainProducts.jsx';
 import MaintainShops from './pages/admin/MaintainShops.jsx';
+import NavigationBar from './components/NavigationBar';
 
 function App() {
   return (
     <div >
+      <NavigationBar /> 
       
       <Routes>
         <Route path="" element={ <HomePage /> } />
