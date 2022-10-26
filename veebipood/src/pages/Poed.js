@@ -4,6 +4,14 @@ function Poed() {
   const poodRef = useRef();
   const aegRef = useRef();
 
+  // const sortAZStringidele = () => {
+  //   poed.sort();
+  //   uuendaPoed(poed.slice());
+  // }
+//{"ZIP":"10696","NAME":"1it postipunkt","TYPE":"1","A0_NAME":"EE","A1_NAME":"Harju maakond","A2_NAME":"Tallinn","A3_NAME":"Kristiine linnaosa","A4_NAME":"","A5_NAME":"S\u00f5pruse pst","A6_NAME":"","A7_NAME":"33","A8_NAME":"","X_COORDINATE":"24.714293","Y_COORDINATE":"59.420107","SERVICE_HOURS":"","TEMP_SERVICE_HOURS":"","TEMP_SERVICE_HOURS_UNTIL":"","TEMP_SERVICE_HOURS_2":"","TEMP_SERVICE_HOURS_2_UNTIL":"","comment_est":"","comment_eng":"","comment_rus":"","comment_lav":"","comment_lit":"","MODIFIED":"2021-12-20T12:51:39.343+02:00"}
+//  pakiautomaadid.sort((a,b) => a.A2_NAME.localeCompare(b.A2_NAME));
+// const originaal = ["Jan", "Feb"]
+//  kuupäevad.sort((a,b) => originaal.indexOf(a) - originaal.indexOf(b) );
   const sortAZ = () => {
     poed.sort((a,b) => a.nimi.localeCompare(b.nimi));
     uuendaPoed(poed.slice());
