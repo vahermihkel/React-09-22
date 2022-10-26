@@ -11,6 +11,8 @@ const resources = {
       "nav.shops": "Shops",
       "nav.about": "About us",
       "nav.cart": "Cart",
+      "robot vacuum": "Robot vacuum",
+      "stick vacuum": "Stick vacuum",
     }
   },
   ee: {
@@ -19,6 +21,8 @@ const resources = {
       "nav.shops": "Poed",
       "nav.about": "Meist",
       "nav.cart": "Ostukorv",
+      "robot vacuum": "Robottolmuimeja",
+      "stick vacuum": "Varstolmuimeja",
     }
   }
 };
