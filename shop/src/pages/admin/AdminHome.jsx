@@ -15,3 +15,6 @@ function AdminHome() {
 }
 
 export default AdminHome;
+
+// array ["Karastusjoogid", "Toit", "sdasd"] --> dünaamiliselt suurendan ja vähendan
+// objekt {"0": "Karastusjoogid", "25": "Toit"}

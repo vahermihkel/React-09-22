@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap";
 import { useState } from "react";
 import productsFromFile from "../../data/products.json";
 import { ToastContainer, toast } from 'react-toastify';
+import { Link } from "react-router-dom";
 
 function MaintainProducts() {
   const [products, setProducts] = useState(productsFromFile);
@@ -20,6 +21,11 @@ function MaintainProducts() {
           <img src={element.image} alt="" />
           <div>{element.name}</div>
           <div>{element.price}</div>
+          {/* shift + kustutamise nupust 1 võrra vasakul */}
+          {/* <Link to={`/admin/edit-product/${element.id}`}> */}
+          <Link to={"/admin/edit-product/" + element.id}>
+            <Button variant="warning">Muuda</Button>
+          </Link>
           <Button variant="danger" onClick={() => remove(index)}>Kustuta</Button>
         </div>)}
     </div> );
