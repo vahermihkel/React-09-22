@@ -1,0 +1,12 @@
+{
+  "translation": {
+    "nav.admin": "To admin view",
+    "nav.shops": "Shops",
+    "nav.about": "About us",
+    "nav.cart": "Cart",
+    "robot vacuum": "Robot vacuum",
+    "stick vacuum": "Stick vacuum",
+    "toast.cart-successful": "🦄 Successfully added ",
+    "toast.to-cart": " to cart"
+  }
+}

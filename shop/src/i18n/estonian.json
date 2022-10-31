@@ -1,0 +1,12 @@
+{
+  "translation": {
+    "nav.admin": "Administraatori vaatesse",
+    "nav.shops": "Poed",
+    "nav.about": "Meist",
+    "nav.cart": "Ostukorv",
+    "robot vacuum": "Robottolmuimeja",
+    "stick vacuum": "Varstolmuimeja",
+    "toast.cart-successful": "🦄 Edukalt ",
+    "toast.to-cart": " ostukorvi lisatud"
+  }
+}

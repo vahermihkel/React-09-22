@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import productsFromFile from "../../data/products.json";
 
 function EditProduct() {
@@ -21,39 +21,50 @@ function EditProduct() {
   const categoryRef = useRef();
   const descriptionRef = useRef();
   const activeRef = useRef();
+  const navigate = useNavigate();
 
   const changeProduct = () => {
     // index????
     // muutmine käib järjekorranumbri alusel
     const newProduct = {
-      "id": idRef.current.value,
+      "id": Number(idRef.current.value),
       "name": nameRef.current.value,
-      "price": priceRef.current.value,
+      "price": Number(priceRef.current.value),
       "image": imageRef.current.value,
       "category": categoryRef.current.value,
       "description": descriptionRef.current.value,
-      "active": activeRef.current.value,
+      "active": activeRef.current.checked,
     };
     products[index] = newProduct;
+    navigate("/admin/maintain-products");
   }
 
   return ( 
     <div>
-      <label>ID</label> <br />
-      <input ref={idRef} type="text" /> <br />
-      <label>Name</label> <br />
-      <input ref={nameRef} type="text" /> <br />
-      <label>Price</label> <br />
-      <input ref={priceRef} type="text" /> <br />
-      <label>Image</label> <br />
-      <input ref={imageRef} type="text" /> <br />
-      <label>Category</label> <br />
-      <input ref={categoryRef} type="text" /> <br />
-      <label>Description</label> <br />
-      <input ref={descriptionRef} type="text" /> <br />
-      <label>Active</label> <br />
-      <input ref={activeRef} type="text" /> <br />
-      <button onClick={changeProduct}>Change</button>
+      { productFound && 
+        <div>
+          <label>ID</label> <br />
+          <input ref={idRef} defaultValue={productFound.id} type="number" /> <br />
+          <label>Name</label> <br />
+          <input ref={nameRef} defaultValue={productFound.name} type="text" /> <br />
+          <label>Price</label> <br />
+          <input ref={priceRef} defaultValue={productFound.price} type="number" /> <br />
+          <label>Image</label> <br />
+          <input ref={imageRef} defaultValue={productFound.image} type="text" /> <br />
+          <label>Category</label> <br />
+          <input ref={categoryRef} defaultValue={productFound.category} type="text" /> <br />
+          <label>Description</label> <br />
+          <input ref={descriptionRef} defaultValue={productFound.description} type="text" /> <br />
+          <label>Active</label> <br />
+          <input ref={activeRef} defaultChecked={productFound.active} type="checkbox" /> <br />
+          <button onClick={changeProduct}>Change</button>
+        </div>
+      }
+      { productFound === undefined && 
+        <div>
+          Toodet ei leitud
+        </div>
+      }
     </div> );
 }
 
