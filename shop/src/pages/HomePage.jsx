@@ -32,9 +32,20 @@ function HomePage() {
     setProducts(result);
   }
 
+                  // {id: 123, name: "Fanta", price: 3.10, ....}
   const addToCart = (productClicked) => {
-    // KODUS ---> samamoodi nagu eesti keelses
-    // const cart = sessionStorage.getItem("cart")
+    let cart = sessionStorage.getItem("cart");
+    cart = JSON.parse(cart) || [];
+    // [{id: 321, kogus: 2},{id: 123, kogus: 1}]
+    const index = cart.findIndex(element => element.id === productClicked.id);
+    if (index >= 0) {   // KUI EI LEITA, ON INDEX -1
+      cart[index].quantity = cart[index].quantity + 1;
+    } else {
+      // juht, kui teda pole ostukorvis
+      cart.push({"id": productClicked.id, "quantity": 1});
+    }
+    cart = JSON.stringify(cart);
+    sessionStorage.setItem("cart", cart);
 
     toast(t("toast.cart-successful") + productClicked.name + t("toast.to-cart"), {
     // toast(`🦄 Edukalt ${productClicked.name} ostukorvi lisatud!`, {
@@ -67,3 +78,22 @@ function HomePage() {
 }
 
 export default HomePage;
+
+// ISESEISEV PROJEKT
+// 21.nov  viimane kokkusaamise päev
+// 30.nov <- ametlikult
+
+// Näitate veebilehte
+// Põgusalt ka koodi
+
+// Ainuke nõue on, et tehtud Reactis
+// 1. Enda poolt välja mõeldud projekt
+// 2. Youtube/Udemy video järgi tehtud projekt
+// 3. Webshopi edasiarendus
+// 4. Proovitöö, mida saate
+
+// Tulevikus:
+// API päringuid
+// useEffect()
+// useMemo()
+// useContext() 
