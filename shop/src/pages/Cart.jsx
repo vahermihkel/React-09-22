@@ -7,6 +7,7 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
   const [cart, setCart] = useState([]);
   // KODUS: Ostukorvi sisu kuvamine samamoodi nagu eesti keelses
   // ostukorvist kustutamine samamoodi
+  const [parcelMachines, setParcelMachines] = useState([]);
 
   // uef     siia lõiku ta läheb ainult 1x, pmst nagu käimaminemise funktsioon
   useEffect(() => {
@@ -15,6 +16,10 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
     });
     console.log(cartWithProducts);
     setCart(cartWithProducts);
+
+    fetch("https://www.omniva.ee/locations.json")
+      .then(res => res.json())
+      .then(json => setParcelMachines(json));
   }, [cartSS]);
 
   const removeFromCart = (productIndex) => {
@@ -68,6 +73,14 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
             <div>{(element.product.price * element.quantity).toFixed(2)}</div>
             <button onClick={() => removeFromCart(index)}>x</button>
           </div>)}
+
+        <select>
+          {parcelMachines
+            .filter(element => element.A0_NAME === "EE" && element.ZIP !== "96331")
+            .map(element => 
+              <option>{element.NAME}</option>)}
+        </select>
+
         <div>Kokku: {calculateCartSum()} €</div>
     </div> );
 }
