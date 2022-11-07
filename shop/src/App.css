@@ -12,3 +12,8 @@
 .lang:active {
   padding: 1px;
 }
+
+.red {
+  border: 1px solid red;
+  background-color: rgb(255, 232, 232);
+}
