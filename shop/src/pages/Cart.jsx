@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import productsFromFile from "../data/products.json";
+import config from "../data/config.json";
+// import productsFromFile from "../data/products.json";
 
 function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,"quantity":1},{"id":48267401,"quantity":4}]
                                     // [{"product":{"id": 1312, name: "asd"}, "quantity": 4},{},{}]
@@ -11,12 +12,20 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
 
   // uef     siia lõiku ta läheb ainult 1x, pmst nagu käimaminemise funktsioon
   useEffect(() => {
-    const cartWithProducts = cartSS.map(element => {
-        return {"product": productsFromFile.find(product => product.id === element.id), "quantity": element.quantity}
-    });
-    console.log(cartWithProducts);
-    setCart(cartWithProducts);
-
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        const cartWithProducts = cartSS.map(element => {
+          const productFound = json.find(product => product.id === element.id);
+          // if (productFound !== undefined) {
+          //   return {"product": productFound, "quantity": element.quantity}
+          // } else {
+          //   return undefined;
+          // }
+          return productFound !== undefined ? {"product": productFound, "quantity": element.quantity} : undefined;
+        }).filter(element => element !== undefined);
+        setCart(cartWithProducts);
+      })
     fetch("https://www.omniva.ee/locations.json")
       .then(res => res.json())
       .then(json => setParcelMachines(json));

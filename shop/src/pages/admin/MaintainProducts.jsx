@@ -33,6 +33,8 @@ function MaintainProducts() {
     })
   }
 
+  // KUI ON VIGA, SIIS ANNA TEADA MINGI SÕNUMI
+
   const searchProducts = () => {
     // console.log(searchedProductRef.current.value);
     const result = dbProducts.filter(element => 

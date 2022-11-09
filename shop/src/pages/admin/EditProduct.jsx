@@ -1,20 +1,22 @@
-import { useState } from "react";
-import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import productsFromFile from "../../data/products.json";
+// import productsFromFile from "../../data/products.json";
+import config from "../../data/config.json";
+import { useEffect, useRef, useState } from "react";
+import Spinner from 'react-bootstrap/Spinner';
 
 function EditProduct() {
   // 1. object destructuring: const { productId } = useParams();
   // 2. objekti võtmist ja hilisemalt võtme kaudu:    const params = useParams();        params.productId
   const params = useParams();
-  const products = productsFromFile;
+  // const products = productsFromFile;
+  const [isLoading, setIsLoading] = useState(true);
+  const [idUnique, setIdUnique] = useState(true);
+  const [dbProducts, setDbProducts] = useState([]);
                                        //    59074235  === "59074235"  --> 59074235
-  const productFound = products.find(element => element.id === Number(params.productId));
-  const index = products.indexOf(productFound);
-
+  const productFound = dbProducts.find(element => element.id === Number(params.productId));
+  const index = dbProducts.indexOf(productFound);
   // const index2 = products.findIndex(element => element.id === Number(params.productId));
   // const productFound2 = products[index2];
-
   const idRef = useRef();
   const nameRef = useRef();
   const priceRef = useRef();
@@ -23,6 +25,15 @@ function EditProduct() {
   const descriptionRef = useRef();
   const activeRef = useRef();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(config.productsDbUrl)
+      .then(res => res.json())
+      .then(json => {
+        setDbProducts(json.slice());
+        setIsLoading(false);
+      })
+  }, []);
 
   const changeProduct = () => {
     // index????
@@ -36,15 +47,21 @@ function EditProduct() {
       "description": descriptionRef.current.value,
       "active": activeRef.current.checked,
     };
-    products[index] = newProduct;
-    navigate("/admin/maintain-products");
+    dbProducts[index] = newProduct;
+    fetch(config.productsDbUrl, {
+      "method": "PUT",
+      "body": JSON.stringify(dbProducts)
+    }).then(() => {
+      // setProducts(dbProducts.slice());
+      // searchProducts();
+      // toast.error("Toode kustutatud");
+      navigate("/admin/maintain-products");
+    })
   }
-
-  const [idUnique, setIdUnique] = useState(true);
 
   const checkIfIdUnique = () => {
     if (params.productId !== idRef.current.value) {
-      const found = productsFromFile.find(element => element.id === Number(idRef.current.value));
+      const found = dbProducts.find(element => element.id === Number(idRef.current.value));
       if (found === undefined) {
         console.log("ON UNIKAALNE");
         setIdUnique(true);
@@ -61,6 +78,7 @@ function EditProduct() {
 
   return ( 
     <div>
+     { isLoading === true && <Spinner animation="border" />}
       { productFound && 
         <div>
           { idUnique === false && <div>Sisestatud ID ei ole unikaalne!</div>}
@@ -82,7 +100,7 @@ function EditProduct() {
               {/*  disabled={!idUnique} */}
         </div>
       }
-      { productFound === undefined && 
+      { productFound === undefined && isLoading === false &&
         <div>
           Toodet ei leitud
         </div>
