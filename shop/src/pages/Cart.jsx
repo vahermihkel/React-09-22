@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import config from "../data/config.json";
+import "../css/Cart.css";
 // import productsFromFile from "../data/products.json";
 
 function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,"quantity":1},{"id":48267401,"quantity":4}]
@@ -69,28 +70,34 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
 
   return ( 
     <div>
-        <button onClick={emptyCart}>Tühjenda</button>
-        <div>Toodete koguarv {cart.length} tk</div>
+       <div className="cart-top">
+          <button onClick={emptyCart}>Tühjenda</button>
+          <div>Toodete koguarv {cart.length} tk</div>
+       </div>
         {cart.map((element, index) => 
-          <div key={index}>
-            <img src={element.product.image} alt="" />
-            <div>{element.product.name}</div>
-            <div>{element.product.price.toFixed(2)}</div>
-            <button onClick={() => decreaseQuantity(index)}>-</button>
-            <div>{element.quantity}</div>
-            <button onClick={() => increaseQuantity(index)}>+</button>
-            <div>{(element.product.price * element.quantity).toFixed(2)}</div>
-            <button onClick={() => removeFromCart(index)}>x</button>
+          <div key={index} className="product">
+            <img className="image" src={element.product.image} alt="" />
+            <div className="name">{element.product.name}</div>
+            <div className="price">{element.product.price.toFixed(2)} €</div>
+            <div className="quantity">
+                <img className="button" onClick={() => decreaseQuantity(index)} src={require("../images/minus.png")} alt="" />
+                <div>{element.quantity} tk</div>
+                <img className="button" onClick={() => increaseQuantity(index)} src={require("../images/plus.png")} alt="" />
+            </div>
+            <div className="sum">{(element.product.price * element.quantity).toFixed(2)} €</div>
+            <img className="button" onClick={() => removeFromCart(index)} src={require("../images/remove.png")} alt="" />
           </div>)}
 
+       <div className="cart-bottom">
         <select>
-          {parcelMachines
-            .filter(element => element.A0_NAME === "EE" && element.ZIP !== "96331")
-            .map(element => 
-              <option>{element.NAME}</option>)}
-        </select>
+            {parcelMachines
+              .filter(element => element.A0_NAME === "EE" && element.ZIP !== "96331")
+              .map(element => 
+                <option>{element.NAME}</option>)}
+          </select>
 
-        <div>Kokku: {calculateCartSum()} €</div>
+          <div>Kokku: {calculateCartSum()} €</div>
+       </div>
     </div> );
 }
 

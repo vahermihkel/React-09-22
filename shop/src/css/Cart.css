@@ -1,0 +1,65 @@
+.product {
+  display: flex; /* vasakult paremale */
+  justify-content: space-between; /* tühi ruum keskele */
+  margin: 0 10%; /* eemale tõukamine */
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0; /* sisse tõukamine */
+  align-items: center;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+}
+
+.name {
+  width: 200px;
+}
+
+.price {
+  width: 70px;
+}
+
+.button {
+  width: 30x;
+  height: 30px;
+}
+
+.button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.button:active {
+  padding: 1px;
+}
+
+.quantity {
+  width: 120px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  height: 36px;
+  padding: 2px;
+  border-radius: 20px;
+}
+
+.sum {
+  width: 90px;
+}
+
+.cart-top {
+  margin-left: 10%;
+}
+
+.cart-bottom {
+  text-align: right;
+  margin-right: 10%;
+}
+
+/* .name, .price, .quantity, .sum {
+    -webkit-transform: translateY(30%);
+  -ms-transform: translateY(30%);
+  transform: translateY(30%);
+} */
+
