@@ -48,11 +48,11 @@
   width: 90px;
 }
 
-.cart-top {
+.cart__top {
   margin-left: 10%;
 }
 
-.cart-bottom {
+.cart__bottom {
   text-align: right;
   margin-right: 10%;
 }

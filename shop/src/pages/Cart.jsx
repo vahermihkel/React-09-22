@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import config from "../data/config.json";
-import "../css/Cart.css";
+import styles from "../css/Cart.module.css";
 // import productsFromFile from "../data/products.json";
 
 function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,"quantity":1},{"id":48267401,"quantity":4}]
@@ -68,27 +68,53 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
     sessionStorage.setItem("cart", JSON.stringify(cartSS));
   }
 
+  const pay = () => {
+    // enne maksma hakkamist ma salvestan tellimuse andmebaasi
+    //                    1. kui klient maksab, aga läheb katki
+    //                    2. saame tellimuse numbri
+    const paymentData = {
+      "api_username": "92ddcfab96e34a5f", //  turvaelement, kasutajanimi, mis peab ühtima headrsis oleva kasutajanimega
+      "account_name": "EUR3D1", // konto nimi
+      "amount": calculateCartSum(), // kogusumma
+      "order_reference": Math.random()*999999, // tellimuse nr, error kui see tellimuse nr on juba tasutud
+      "nonce": "a9b7f7e794" + Math.random()*999999 + new Date(), // turvaelement, iga päring peab olema unikaalne
+      "timestamp": new Date(), // turvaelement, ajatempel
+      "customer_url": "https://react09202.web.app" // aadress, kuhu teda hiljem tagasi suunata pärast maksmist
+      }
+    const headersData = {
+      "Authorization": "Basic OTJkZGNmYWI5NmUzNGE1Zjo4Y2QxOWU5OWU5YzJjMjA4ZWU1NjNhYmY3ZDBlNGRhZA==",
+      "Content-Type": "application/json"
+    }
+    fetch("https://igw-demo.every-pay.com/api/v4/payments/oneoff",{
+      "method": "POST",
+      "body": JSON.stringify(paymentData),
+      "headers": headersData
+    }).then(res => res.json())
+      .then(json => window.location.href = json.payment_link)
+  }
+
   return ( 
     <div>
-       <div className="cart-top">
+       <div className={styles.cart__top}>
           <button onClick={emptyCart}>Tühjenda</button>
           <div>Toodete koguarv {cart.length} tk</div>
        </div>
+
         {cart.map((element, index) => 
-          <div key={index} className="product">
-            <img className="image" src={element.product.image} alt="" />
-            <div className="name">{element.product.name}</div>
-            <div className="price">{element.product.price.toFixed(2)} €</div>
-            <div className="quantity">
-                <img className="button" onClick={() => decreaseQuantity(index)} src={require("../images/minus.png")} alt="" />
+          <div key={index} className={styles.product}>
+            <img className={styles.image} src={element.product.image} alt="" />
+            <div className={styles.name}>{element.product.name}</div>
+            <div className={styles.price}>{element.product.price.toFixed(2)} €</div>
+            <div className={styles.quantity}>
+                <img className={styles.button} onClick={() => decreaseQuantity(index)} src={require("../images/minus.png")} alt="" />
                 <div>{element.quantity} tk</div>
-                <img className="button" onClick={() => increaseQuantity(index)} src={require("../images/plus.png")} alt="" />
+                <img className={styles.button} onClick={() => increaseQuantity(index)} src={require("../images/plus.png")} alt="" />
             </div>
-            <div className="sum">{(element.product.price * element.quantity).toFixed(2)} €</div>
-            <img className="button" onClick={() => removeFromCart(index)} src={require("../images/remove.png")} alt="" />
+            <div className={styles.sum}>{(element.product.price * element.quantity).toFixed(2)} €</div>
+            <img className={styles.button} onClick={() => removeFromCart(index)} src={require("../images/remove.png")} alt="" />
           </div>)}
 
-       <div className="cart-bottom">
+       <div className={styles.cart__bottom}>
         <select>
             {parcelMachines
               .filter(element => element.A0_NAME === "EE" && element.ZIP !== "96331")
@@ -97,7 +123,9 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
           </select>
 
           <div>Kokku: {calculateCartSum()} €</div>
+          <button onClick={pay}>Maksma</button>
        </div>
+
     </div> );
 }
 
@@ -108,3 +136,12 @@ export default Cart;
 
 // Kui leht on valge, siis on runtime viga
 //      Selle leiab "parem klõps" -> "inspect" -> "console"
+
+
+// e-maili saatmine https://www.emailjs.com/ 15-20
+// kaardirakendus https://react-leaflet.js.org/ 15-20 <--- failid e-mailile
+// piltide üleslaadimine Firebase Storage 30min <--- failid e-mailile + seadistamine Firebases
+// useContext() sisselogimine/registreerumine    Context.Provider  terve koolituspäeva
+
+// 16.nov - 0.6 päeva useContext / 0.4 päeva saame teha pisiasju
+// 21.nov - lahendan proovitööd 0.5 päeva / 0.5 päeva useContext
