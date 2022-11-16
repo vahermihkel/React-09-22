@@ -7,12 +7,15 @@ import { useTranslation } from "react-i18next";
 //  default   from
 import { ToastContainer, toast } from 'react-toastify';
 import config from "../data/config.json";
+import { useContext } from "react";
+import CartSumContext from '../store/CartSumContext';
 
 function HomePage() {
   const [dbProducts, setDbProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const categories = [...new Set(dbProducts.map(element => element.category))];
   const { t } = useTranslation();
+  const cartSumCtx = useContext(CartSumContext);
 
   useEffect(() => {
     fetch(config.productsDbUrl)
@@ -56,6 +59,22 @@ function HomePage() {
       // juht, kui teda pole ostukorvis
       cart.push({"id": productClicked.id, "quantity": 1});
     }
+    
+    
+    const cartWithProducts = cart.map(element => {
+      const productFound = dbProducts.find(product => product.id === element.id);
+      return productFound !== undefined ? {"product": productFound, "quantity": element.quantity} : undefined;
+    }).filter(element => element !== undefined);
+
+    let cartSum = 0;
+    cartWithProducts.forEach(element => cartSum = cartSum + element.product.price * element.quantity);
+
+    cartSumCtx.setCartSum(cartSum.toFixed(2));
+    
+    
+    
+    
+    
     cart = JSON.stringify(cart);
     sessionStorage.setItem("cart", cart);
 
