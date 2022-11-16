@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import config from "../data/config.json";
 import styles from "../css/Cart.module.css";
+import { Link } from "react-router-dom";
 // import productsFromFile from "../data/products.json";
 
 function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,"quantity":1},{"id":48267401,"quantity":4}]
@@ -95,10 +96,10 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
 
   return ( 
     <div>
-       <div className={styles.cart__top}>
+       { cart.length > 0 && <div className={styles.cart__top}>
           <button onClick={emptyCart}>Tühjenda</button>
           <div>Toodete koguarv {cart.length} tk</div>
-       </div>
+       </div>}
 
         {cart.map((element, index) => 
           <div key={index} className={styles.product}>
@@ -114,7 +115,7 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
             <img className={styles.button} onClick={() => removeFromCart(index)} src={require("../images/remove.png")} alt="" />
           </div>)}
 
-       <div className={styles.cart__bottom}>
+       { cart.length > 0 && <div className={styles.cart__bottom}>
         <select>
             {parcelMachines
               .filter(element => element.A0_NAME === "EE" && element.ZIP !== "96331")
@@ -124,7 +125,9 @@ function Cart() {                   // [{"id":1312,"quantity":4},{"id":59074235,
 
           <div>Kokku: {calculateCartSum()} €</div>
           <button onClick={pay}>Maksma</button>
-       </div>
+       </div>}
+
+       { cart.length === 0 && <div>Ostukorv on tühi. <Link to="/">Tooteid valima</Link> </div> }
 
     </div> );
 }
